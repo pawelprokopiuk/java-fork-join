@@ -4,7 +4,7 @@ import javax.imageio.ImageIO;
 import java.util.concurrent.RecursiveAction;
 import java.util.concurrent.ForkJoinPool;
 
-public class ForkSobel extends RecursiveAction {
+public class ForkEdgeDetection extends RecursiveAction {
     private static final int sThreshold = 10000; // Threshold for splitting tasks
     private final int[] mSource;
     private final int mStart;
@@ -13,7 +13,7 @@ public class ForkSobel extends RecursiveAction {
     private final int mWidth;
     private final int mHeight;
 
-    public ForkSobel(int[] src, int start, int length, int[] dst, int width, int height) {
+    public ForkEdgeDetection(int[] src, int start, int length, int[] dst, int width, int height) {
         mSource = src;
         mStart = start;
         mLength = length;
@@ -32,8 +32,8 @@ public class ForkSobel extends RecursiveAction {
         int split = mLength / 2;
 
         invokeAll(
-                new ForkSobel(mSource, mStart, split, mDestination, mWidth, mHeight),
-                new ForkSobel(mSource, mStart + split, mLength - split, mDestination, mWidth, mHeight)
+                new ForkEdgeDetection(mSource, mStart, split, mDestination, mWidth, mHeight),
+                new ForkEdgeDetection(mSource, mStart + split, mLength - split, mDestination, mWidth, mHeight)
         );
     }
 
@@ -113,8 +113,8 @@ public class ForkSobel extends RecursiveAction {
         // Create the ForkJoinPool
         ForkJoinPool pool = new ForkJoinPool();
 
-        // Start the ForkSobel task
-        ForkSobel task = new ForkSobel(src, 0, src.length, dst, width, height);
+        // Start the ForkEdgeDetection task
+        ForkEdgeDetection task = new ForkEdgeDetection(src, 0, src.length, dst, width, height);
         long startTime = System.currentTimeMillis();
         pool.invoke(task);
         long endTime = System.currentTimeMillis();
