@@ -5,7 +5,7 @@ import java.util.concurrent.RecursiveAction;
 import java.util.concurrent.ForkJoinPool;
 
 public class ForkEdgeDetection extends RecursiveAction {
-    private static final int sThreshold = 10000; // Threshold for splitting tasks
+    private static final int sThreshold = 500000; // Threshold for splitting tasks
     private final int[] mSource;
     private final int mStart;
     private final int mLength;
