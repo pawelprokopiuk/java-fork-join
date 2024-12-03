@@ -6,7 +6,7 @@ public class SingleThreadBlur {
     private static final int BLUR_WIDTH = 15; // Processing window size
 
     public static void main(String[] args) throws Exception {
-        // Load the source image
+        // Load source image
         BufferedImage image = ImageIO.read(new File("source.jpg"));
         int width = image.getWidth();
         int height = image.getHeight();
@@ -16,14 +16,14 @@ public class SingleThreadBlur {
 
         System.out.println("Image loaded. Starting blur...");
 
-        // Perform the blur
+        // perform the blur
         long startTime = System.currentTimeMillis();
         blurImage(src, dst, width, height);
         long endTime = System.currentTimeMillis();
 
         System.out.println("Blur completed in " + (endTime - startTime) + " ms.");
 
-        // Write the blurred image to file
+        // write blurred image
         BufferedImage blurredImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         blurredImage.setRGB(0, 0, width, height, dst, 0, width);
         ImageIO.write(blurredImage, "png", new File("blurred_single.png"));
@@ -38,7 +38,7 @@ public class SingleThreadBlur {
             for (int x = 0; x < width; x++) {
                 float rt = 0, gt = 0, bt = 0;
 
-                // Sum up the color values of surrounding pixels
+                // Sum up color values of surrounding pixels
                 for (int ky = -sidePixels; ky <= sidePixels; ky++) {
                     for (int kx = -sidePixels; kx <= sidePixels; kx++) {
                         int pixelX = Math.min(Math.max(x + kx, 0), width - 1);

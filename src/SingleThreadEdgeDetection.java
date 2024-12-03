@@ -14,14 +14,14 @@ public class SingleThreadEdgeDetection {
 
         System.out.println("Image loaded. Starting edge detection...");
 
-        // Perform the Sobel edge detection
+        // start edge detection
         long startTime = System.currentTimeMillis();
         applySobelFilter(src, dst, width, height);
         long endTime = System.currentTimeMillis();
 
         System.out.println("Edge detection completed in " + (endTime - startTime) + " ms.");
 
-        // Write the edge-detected image to file
+        // save image
         BufferedImage edgeDetectedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         edgeDetectedImage.setRGB(0, 0, width, height, dst, 0, width);
         ImageIO.write(edgeDetectedImage, "png", new File("edge_detected_single_thread.png"));
@@ -30,7 +30,7 @@ public class SingleThreadEdgeDetection {
     }
 
     public static void applySobelFilter(int[] src, int[] dst, int width, int height) {
-        // Sobel kernels
+        // kernels
         int[][] Gx = {
                 {-1, 0, 1},
                 {-2, 0, 2},
@@ -83,14 +83,14 @@ public class SingleThreadEdgeDetection {
             }
         }
 
-        // Handle edges (set to black)
+        // handle edges
         for (int x = 0; x < width; x++) {
-            dst[x] = 0xff000000; // Top row
-            dst[(height - 1) * width + x] = 0xff000000; // Bottom row
+            dst[x] = 0xff000000; // top row
+            dst[(height - 1) * width + x] = 0xff000000; // bottom row
         }
         for (int y = 0; y < height; y++) {
-            dst[y * width] = 0xff000000; // Left column
-            dst[y * width + (width - 1)] = 0xff000000; // Right column
+            dst[y * width] = 0xff000000; // left column
+            dst[y * width + (width - 1)] = 0xff000000; // right column
         }
     }
 }

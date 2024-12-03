@@ -38,7 +38,7 @@ public class ForkEdgeDetection extends RecursiveAction {
     }
 
     protected void computeDirectly() {
-        // Sobel Kernels
+        // Kernels
         int[][] Gx = {
                 {-1, 0, 1},
                 {-2, 0, 2},
@@ -54,9 +54,9 @@ public class ForkEdgeDetection extends RecursiveAction {
             int x = index % mWidth;
             int y = index / mWidth;
 
-            // Skip the edges
+            // Skip edges
             if (x == 0 || x == mWidth - 1 || y == 0 || y == mHeight - 1) {
-                mDestination[index] = 0xff000000; // Set to black
+                mDestination[index] = 0xff000000; // black
                 continue;
             }
 
@@ -84,12 +84,12 @@ public class ForkEdgeDetection extends RecursiveAction {
                 }
             }
 
-            // Compute gradient magnitude
+            // compute gradient magnitude
             int edgeRed = (int) Math.min(255, Math.sqrt(gxRed * gxRed + gyRed * gyRed));
             int edgeGreen = (int) Math.min(255, Math.sqrt(gxGreen * gxGreen + gyGreen * gyGreen));
             int edgeBlue = (int) Math.min(255, Math.sqrt(gxBlue * gxBlue + gyBlue * gyBlue));
 
-            // Combine channels into a single ARGB pixel
+            // combine channels into single pixel
             int edgePixel = (0xff000000) |
                     (edgeRed << 16) |
                     (edgeGreen << 8) |
@@ -121,7 +121,7 @@ public class ForkEdgeDetection extends RecursiveAction {
 
         System.out.println("Edge detection completed in " + (endTime - startTime) + " ms.");
 
-        // Write the edge-detected image to file
+        // Write image
         BufferedImage edgeDetectedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         edgeDetectedImage.setRGB(0, 0, width, height, dst, 0, width);
         ImageIO.write(edgeDetectedImage, "png", new File("edge_detected.png"));

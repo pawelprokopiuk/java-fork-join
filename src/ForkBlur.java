@@ -5,7 +5,7 @@ import java.util.concurrent.RecursiveAction;
 import java.util.concurrent.ForkJoinPool;
 
 public class ForkBlur extends RecursiveAction {
-    private static final int sThreshold = 10000; // Threshold for splitting tasks
+    private static final int sThreshold = 10000; // Threshold
     private final int[] mSource;
     private final int mStart;
     private final int mLength;
@@ -69,10 +69,10 @@ public class ForkBlur extends RecursiveAction {
 
         System.out.println("Image loaded. Starting blur...");
 
-        // Create the ForkJoinPool
+        // ForkJoinPool
         ForkJoinPool pool = new ForkJoinPool();
 
-        // Start the ForkBlur task
+        // Start ForkBlur task
         ForkBlur fb = new ForkBlur(src, 0, src.length, dst);
         long startTime = System.currentTimeMillis();
         pool.invoke(fb);
@@ -80,7 +80,7 @@ public class ForkBlur extends RecursiveAction {
 
         System.out.println("Blur completed in " + (endTime - startTime) + " ms.");
 
-        // Write the blurred image to file
+        // Write blurred image
         BufferedImage blurredImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         blurredImage.setRGB(0, 0, width, height, dst, 0, width);
         ImageIO.write(blurredImage, "png", new File("blurred.png"));
